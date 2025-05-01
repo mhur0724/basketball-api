@@ -3,6 +3,8 @@ const playersRouter = require("./routes/playersRouter");
 const path = require("path");
 const app = express();
 
+app.use(express.json());
+
 app.set("view engine", "ejs");
 app.set("views", "./views");
 

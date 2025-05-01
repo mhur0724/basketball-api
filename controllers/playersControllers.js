@@ -15,4 +15,11 @@ const getPlayer = (req, res) => {
   res.render("player", { title: player.name, player });
 };
 
-module.exports = { getPlayers, getPlayer };
+const postPlayer = (req,res) => {
+  console.log(req.body);
+  const newPlayer = req.body;
+  players.push(newPlayer);
+  res.redirect('/players');
+}
+
+module.exports = { getPlayers, getPlayer, postPlayer };
