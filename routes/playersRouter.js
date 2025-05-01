@@ -1,18 +1,11 @@
 const { Router } = require("express");
-const { getPlayers, getPlayer, postPlayer } = require("../controllers/playersControllers");
+const { getPlayers, getPlayer, postPlayers, updatePlayer, deletePlayer } = require("../controllers/playersControllers");
 const playersRouter = Router();
 
 playersRouter.get("/", getPlayers);
 playersRouter.get("/:playerId", getPlayer);
-
-playersRouter.post("/", postPlayer);
-
-playersRouter.put("/:playerId", (req, res) => {
-  res.send("hello");
-});
-
-playersRouter.delete("/:playerId", (req, res) => {
-  res.send("hello");
-});
+playersRouter.post("/", postPlayers);
+playersRouter.put("/:playerId", updatePlayer);
+playersRouter.delete("/:playerId", deletePlayer);
 
 module.exports = playersRouter;
