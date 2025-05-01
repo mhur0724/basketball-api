@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/addPlayer.css">
+</head>
+<body>
+    <form action="/players" method="POST">
+        <label for="name">Name: </label>
+        <input type="text" required placeholder="Enter Name" id="name" name="name">
+        <label for="team">Team: </label>
+        <input type="text" required placeholder="Enter Team" id="team" name="team">
+        <label for="position">Position: </label>
+        <input type="text" required placeholder="Enter position" id="position" name="position">
+        <label for="points">points: </label>
+        <input type="text" placeholder="Enter points" id="points" name="points">
+        <label for="assists">assists: </label>
+        <input type="text" placeholder="Enter assists" id="assists" name="assists">
+        <label for="rebounds">rebounds: </label>
+        <input type="text" placeholder="Enter rebounds" id="rebounds" name="rebounds">
+        <label for="fgMade">fgMade: </label>
+        <input type="text" placeholder="Enter fgMade" id="fgMade" name="fgMade">
+        <label for="fgAttempted">fgAttempted: </label>
+        <input type="text" placeholder="Enter fgAttempted" id="fgAttempted" name="fgAttempted">
+        <label for="threePMade">threePMade: </label>
+        <input type="text" placeholder="Enter threePMade" id="threePMade" name="threePMade">
+        <label for="threePAttempted">threePAttempted: </label>
+        <input type="text" placeholder="Enter threePAttempted" id="threePAttempted" name="threePAttempted">
+        <label for="freeThrowsMade">freeThrowsMade: </label>
+        <input type="text" placeholder="Enter freeThrowsMade" id="freeThrowsMade" name="freeThrowsMade">
+        <label for="freeThrowsAttempted">freeThrowsAttempted: </label>
+        <input type="text" placeholder="Enter freeThrowsAttempted" id="freeThrowsAttempted" name="freeThrowsAttempted">
+        <label for="minutesPerGame">minutesPerGame: </label>
+        <input type="text" placeholder="Enter minutesPerGame" id="minutesPerGame" name="minutesPerGame">
+        <button>Submit</button>
+    </form>
+</body>
+</html>

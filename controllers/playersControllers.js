@@ -6,8 +6,6 @@ const getPlayers = (req, res) => {
 
 const getPlayer = (req, res) => {
   const { playerId } = req.params;
-  console.log(playerId);
-
   const player = players.find((player) => player.id === Number(playerId));
   if (!player) {
     return res.status(404).send("Player not found");
@@ -15,15 +13,24 @@ const getPlayer = (req, res) => {
   res.render("player", { title: player.name, player });
 };
 
+const getAddPlayer = (req,res) => {
+  res.render('addPlayer', {title: "Add Player"});
+}
 const postPlayers = (req,res) => {
   const newPlayer = req.body;
-  if (!newPlayer.id && !newPlayer.name && !newPlayer.team) {
+  if (!newPlayer.name || !newPlayer.team) {
    return res.status(404).send('New Player not added')
   }
+  newPlayer.id = players.length + 1;
   players.push(newPlayer);
   res.redirect('/players');
 }
 
+const getUpdatePlayer = (req,res) => {
+  const {playerId} = req.params;
+  const player = players.find(player => player.id === Number(playerId));
+  res.render('editPlayer', {title: "Edit Player", player})
+}
 const updatePlayer = (req, res) => {
   const {playerId} = req.params;
   const { name, team, position, points, assists, rebounds, fgMade, fgAttempted, threePMade, threePAttempted, freeThrowsMade, freeThrowsAttempted, minutesPerGame } = req.body;
@@ -35,7 +42,7 @@ const updatePlayer = (req, res) => {
   //  get the player and what the req was and update the info
   const updatedPlayerData = req.body;
   Object.assign(player,updatedPlayerData);
-  res.redirect('/players');
+  res.render('player', {title: "Edit Player", player})
 }
 
 const deletePlayer = (req, res) => {
@@ -45,7 +52,8 @@ const deletePlayer = (req, res) => {
     return res.status(404).send('could not delete player');
   }
   players.splice(playerIndex, 1);
-  res.redirect('/players');
+  res.status(200).json({ message: 'Player deleted' });
 }
 
-module.exports = { getPlayers, getPlayer, postPlayers, updatePlayer, deletePlayer };
+
+module.exports = { getPlayers, getPlayer, getAddPlayer, postPlayers, getUpdatePlayer, updatePlayer, deletePlayer };

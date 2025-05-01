@@ -1,10 +1,13 @@
 const express = require("express");
 const playersRouter = require("./routes/playersRouter");
+const {body, validationResult} = require('express-validator');
 const path = require("path");
 const app = express();
+const assetsPath = path.join(__dirname, "public");
 
+app.use(express.static(assetsPath));
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
