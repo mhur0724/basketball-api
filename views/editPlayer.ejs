@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1>Edit Player: <%= player.name %></h1>
-    <form action="/players/<%= player.id%>?_method=PATCH" method="POST">
+    <form action="/players/<%= player.id%>?_method=PUT" method="POST">
         <% for (const [key, value] of Object.entries(player)) { %>
             <% if (key != "id" ) { %>
                 <label for="<%= key %>"><%= key %>: </label>

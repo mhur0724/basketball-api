@@ -7,7 +7,7 @@ playersRouter.post("/", postPlayers);
 playersRouter.get("/:playerId", getPlayer);
 playersRouter.delete("/:playerId", deletePlayer);
 playersRouter.get('/:playerId/edit', getUpdatePlayer)
-playersRouter.patch("/:playerId", updatePlayer);
+playersRouter.put("/:playerId", updatePlayer);
 playersRouter.get("/", getPlayers);
 
 module.exports = playersRouter;

@@ -21,7 +21,7 @@ const postPlayers = (req,res) => {
   if (!newPlayer.name || !newPlayer.team) {
    return res.status(404).send('New Player not added')
   }
-  newPlayer.id = players.length + 1;
+  newPlayer.id = players[players.length-1].id + 1;
   players.push(newPlayer);
   res.redirect('/players');
 }
@@ -32,23 +32,14 @@ const getUpdatePlayer = (req,res) => {
   res.render('editPlayer', {title: "Edit Player", player})
 }
 const updatePlayer = (req, res) => {
-  const { playerId } = req.params;
-  const player = players.find(p => p.id === Number(playerId));
-
+  const {playerId} = req.params;
+  const player = players.find(player => player.id === Number(playerId));
   if (!player) {
-    return res.status(404).send('Player not found');
+    return res.status(404).send('could not update player');
   }
-
-  const updatedData = req.body;
-
-  // Update each field in the player with the submitted data
-  for (const key in updatedData) {
-    if (player.hasOwnProperty(key)) {
-      player[key] = updatedData[key];
-    }
-  }
-
-  res.redirect(`/players/${playerId}`);
+  const updatedPlayerData = req.body;
+  Object.assign(player,updatedPlayerData);
+  res.render('player', {title: "Edit Player", player})
 }
 
 const deletePlayer = (req, res) => {
