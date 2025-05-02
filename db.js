@@ -113,4 +113,19 @@ let players = [
   },
 ];
 
-module.exports = { players };
+let playerCategories = [
+  "name",
+  "team",
+  "position",
+  "points",
+  "assists",
+  "rebounds",
+  "fgMade",
+  "fgAttempted",
+  "threePMade",
+  "threePAttempted",
+  "freeThrowsMade",
+  "freeThrowsAttempted",
+  "minutesPerGame"
+]
+module.exports = { players, playerCategories };

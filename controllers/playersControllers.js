@@ -1,4 +1,4 @@
-const { players } = require("../db");
+const { players , playerCategories } = require("../db");
 
 const getPlayers = (req, res) => {
   res.render("players", { title: "Players", players: players });
@@ -14,7 +14,7 @@ const getPlayer = (req, res) => {
 };
 
 const getAddPlayer = (req,res) => {
-  res.render('addPlayer', {title: "Add Player"});
+  res.render('addPlayer', {title: "Add Player", playerCategories});
 }
 const postPlayers = (req,res) => {
   const newPlayer = req.body;
@@ -32,17 +32,23 @@ const getUpdatePlayer = (req,res) => {
   res.render('editPlayer', {title: "Edit Player", player})
 }
 const updatePlayer = (req, res) => {
-  const {playerId} = req.params;
-  const { name, team, position, points, assists, rebounds, fgMade, fgAttempted, threePMade, threePAttempted, freeThrowsMade, freeThrowsAttempted, minutesPerGame } = req.body;
-  const player = players.find(player => player.id === Number(playerId));
-  // i need to check if that playerId even exists
+  const { playerId } = req.params;
+  const player = players.find(p => p.id === Number(playerId));
+
   if (!player) {
-    return res.status(404).send('could not update player');
+    return res.status(404).send('Player not found');
   }
-  //  get the player and what the req was and update the info
-  const updatedPlayerData = req.body;
-  Object.assign(player,updatedPlayerData);
-  res.render('player', {title: "Edit Player", player})
+
+  const updatedData = req.body;
+
+  // Update each field in the player with the submitted data
+  for (const key in updatedData) {
+    if (player.hasOwnProperty(key)) {
+      player[key] = updatedData[key];
+    }
+  }
+
+  res.redirect(`/players/${playerId}`);
 }
 
 const deletePlayer = (req, res) => {
