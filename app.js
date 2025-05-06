@@ -1,6 +1,6 @@
 const express = require("express");
 const playersRouter = require("./routes/playersRouter");
-const methodOverride = require('method-override');
+const methodOverride = require("method-override");
 const path = require("path");
 const app = express();
 const assetsPath = path.join(__dirname, "public");
@@ -8,7 +8,7 @@ const assetsPath = path.join(__dirname, "public");
 app.use(express.static(assetsPath));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(methodOverride('_method'));
+app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
