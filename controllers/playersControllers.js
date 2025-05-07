@@ -12,7 +12,7 @@ const getPlayers = async (req, res) => {
 const getPlayer = async (req, res) => {
   const { playerId } = req.params;
   try {
-    const player = await pool.query(`SELECT * FROM players WHERE id = $1;`, [
+    const player = await pool.query(`SELECT * FROM players WHERE id = $1 LIMIT 1;`, [
       playerId,
     ]);
     res.render("player", {
@@ -30,7 +30,7 @@ const getAddPlayer = async (req, res) => {
     let playerCategories = Object.keys(players._prebuiltEmptyResultObject);
     res.render("addPlayer", { title: "Add Player", playerCategories });
   } catch (err) {
-    res.stat(500).send("Could not get add player form");
+    res.status(500).send("Could not get add player form");
   }
 };
 
@@ -56,7 +56,7 @@ const getUpdatePlayer = async (req, res) => {
   const { playerId } = req.params;
   try {
     let player = await pool.query(
-      `SELECT * FROM players WHERE id = ${playerId}`
+      `SELECT * FROM players WHERE id = $1 LIMIT 1`, [playerId]
     );
     res.render("editPlayer", { title: "Edit Player", player: player.rows[0] });
   } catch (err) {
@@ -68,40 +68,23 @@ const updatePlayer = async (req, res) => {
   const { playerId } = req.params;
   const updatedPlayerData = req.body;
   try {
-    let player = await pool.query(
-      `SELECT * FROM players WHERE id = ${playerId};`
-    );
-    player = player.rows[0];
-    Object.assign(player, updatedPlayerData);
-    console.log(player);
-    let setStatement = [];
-    for (const [key, value] of Object.entries(player)) {
-      value === "" ? null : value;
-      setStatement.push(`${key} = '${value}'`);
-    }
-    console.log(setStatement);
-    console.log(
-      `UPDATE players SET ${setStatement.join(", ")} WHERE id = ${playerId}`
-    );
-
+    let keys = Object.keys(updatedPlayerData).filter(key => key !== "id");
+    let values = keys.map(key => updatedPlayerData[key] === "" ? null : updatedPlayerData[key]);
+    let setStatement = keys.map((key,i) => `${key} = $${i+1}`).join(', ');
+    values.push(playerId);
     await pool.query(
-      `UPDATE players SET ${setStatement.join(", ")} WHERE id = ${playerId}`
+      `UPDATE players SET ${setStatement} WHERE id = $${values.length}`, values
     );
-    console.log("updated player");
-
-    console.log("retreived updated player");
     return getPlayer(req, res);
   } catch (err) {
     res.status(404).send("Could not update player");
   }
-  //   const updatedPlayerData = req.body;
-  //   res.render("player", { title: "Edit Player", player });
 };
 
 const deletePlayer = async (req, res) => {
   const { playerId } = req.params;
   try {
-    await pool.query(`DELETE FROM players WHERE id = ${playerId} `);
+    await pool.query(`DELETE FROM players WHERE id = $1 LIMIT 1;`, [playerId]);
     res.status(200).json({ message: "Player deleted" });
   } catch (err) {
     return res.status(404).send("could not delete player");
