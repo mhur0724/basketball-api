@@ -1,5 +1,4 @@
-const { players, playerCategories } = require("../db");
-const pool = require("../postgresdb");
+const pool = require("../db");
 
 const getPlayers = async (req, res) => {
   try {
@@ -13,9 +12,9 @@ const getPlayers = async (req, res) => {
 const getPlayer = async (req, res) => {
   const { playerId } = req.params;
   try {
-    const player = await pool.query(
-      `SELECT * FROM players WHERE id = ${playerId};`
-    );
+    const player = await pool.query(`SELECT * FROM players WHERE id = $1;`, [
+      playerId,
+    ]);
     res.render("player", {
       title: player.rows[0].name,
       player: player.rows[0],
@@ -25,21 +24,28 @@ const getPlayer = async (req, res) => {
   }
 };
 
-const getAddPlayer = (req, res) => {
-  res.render("addPlayer", { title: "Add Player", playerCategories });
+const getAddPlayer = async (req, res) => {
+  try {
+    const players = await pool.query(`SELECT * FROM players`);
+    let playerCategories = Object.keys(players._prebuiltEmptyResultObject);
+    res.render("addPlayer", { title: "Add Player", playerCategories });
+  } catch (err) {
+    res.stat(500).send("Could not get add player form");
+  }
 };
 
 const postPlayers = async (req, res) => {
   const newPlayer = req.body;
   let categories = Object.keys(newPlayer).join(", ");
   let values = Object.values(newPlayer).map((value) =>
-    value === "" ? null : `'${value}'`
+    value === "" ? null : value
   );
 
-  let valueString = values.map((value) => `${value}`).join(", ");
-  let query = `INSERT INTO players (${categories}) VALUES (${valueString});`;
+  const placeholders = values.map((_, i) => `$${i + 1}`).join(", ");
+
+  let query = `INSERT INTO players (${categories}) VALUES (${placeholders});`;
   try {
-    await pool.query(query);
+    await pool.query(query, values);
     res.redirect("/players");
   } catch (err) {
     res.status(400).send("Could not add player");
@@ -70,25 +76,21 @@ const updatePlayer = async (req, res) => {
     console.log(player);
     let setStatement = [];
     for (const [key, value] of Object.entries(player)) {
+      value === "" ? null : value;
       setStatement.push(`${key} = '${value}'`);
     }
     console.log(setStatement);
+    console.log(
+      `UPDATE players SET ${setStatement.join(", ")} WHERE id = ${playerId}`
+    );
 
     await pool.query(
       `UPDATE players SET ${setStatement.join(", ")} WHERE id = ${playerId}`
     );
     console.log("updated player");
 
-    let updatedPlayer = await pool.query(
-      `SELECT * FROM players WHERE id = ${playerId}`
-    );
     console.log("retreived updated player");
-
-    // res.render(`/players/${playerId}`, {
-    //   title: updatedPlayer.rows[0].name,
-    //   player: updatedPlayer.rows[0],
-    // });
-    res.render("/players");
+    return getPlayer(req, res);
   } catch (err) {
     res.status(404).send("Could not update player");
   }
