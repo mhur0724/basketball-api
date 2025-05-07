@@ -1,4 +1,5 @@
-const { players , playerCategories } = require("../db");
+// const { players , playerCategories } = require("../db");
+const db = require('db');
 
 const getPlayers = (req, res) => {
   res.render("players", { title: "Players", players: players });
