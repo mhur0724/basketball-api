@@ -12,11 +12,6 @@ app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
-app.use((req, res, next) => {
-  console.log(`METHOD: ${req.method} | URL: ${req.originalUrl}`);
-  next();
-});
-
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "views/index.html"));
 });

@@ -120,12 +120,12 @@ let playerCategories = [
   "points",
   "assists",
   "rebounds",
-  "fgMade",
-  "fgAttempted",
-  "threePMade",
-  "threePAttempted",
-  "freeThrowsMade",
-  "freeThrowsAttempted",
-  "minutesPerGame"
-]
+  "fg_made",
+  "fg_attempted",
+  "three_p_made",
+  "three_p_attempted",
+  "free_throws_made",
+  "free_throws_attempted",
+  "minutes_per_game",
+];
 module.exports = { players, playerCategories };
