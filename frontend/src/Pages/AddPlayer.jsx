@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import AddPlayerFormField from '../components/AddPlayerFormField';
+import PlayerFormField from '../components/PlayerFormField';
 const AddPlayer = () => {
     const [categories, setCategories] = useState({});
     const [formData, setFormData] = useState({});
@@ -22,10 +22,10 @@ const AddPlayer = () => {
         getPlayerCategories();
     },[])
 
-const handleChange = (e) => {
-        setFormData(prev => ({
-            ...prev, [e.target.name] : e.target.value
-        }));
+    const handleChange = (e) => {
+      setFormData(prev => ({
+          ...prev, [e.target.name] : e.target.value
+      }));
     };
 
     const handleSubmit = async (e) => {
@@ -46,7 +46,7 @@ const handleChange = (e) => {
         {categories
           .filter(category => category !== "id")
           .map(category => (
-            <AddPlayerFormField
+            <PlayerFormField
               key={category}
               category={category}
               handleChange={handleChange}

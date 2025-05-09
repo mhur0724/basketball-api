@@ -22,6 +22,16 @@ const PlayersList = () => {
 
     if (loading) return <p>Loading players...</p>;
     if (!players) return <p>Failed to load players</p>;
+    if (players.length == 0) {
+        return (
+            <div>
+                <p>No players to show</p>
+                <Link to="/players/add">
+                    <button>Add Player</button>
+                </Link>
+            </div>
+        )
+    }
     return (
         <div>
             <ul>

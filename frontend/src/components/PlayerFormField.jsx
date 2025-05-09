@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AddPlayerFormField = ({category, handleChange, formData}) => {
+const PlayerFormField = ({category, handleChange, formData}) => {
     return (
         <div>
             <label htmlFor={category}>{category} : </label>
@@ -16,4 +16,4 @@ const AddPlayerFormField = ({category, handleChange, formData}) => {
     )
 }
 
-export default AddPlayerFormField
+export default PlayerFormField
