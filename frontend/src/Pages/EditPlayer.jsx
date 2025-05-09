@@ -41,16 +41,17 @@ const EditPlayer = () => {
     <div>
         <h1>Edit Player</h1>
         <form onSubmit={handleSubmit}>
-            {Object.entries(formData).map(([key, value]) => {
-                if (key !== 'id') {
+            {Object.entries(formData).map(([category, stat]) => {
+                if (category !== 'id') {
                     return (
-                        <div key={key}>
-                            <label htmlFor={key}>{key}: </label>
+                        <div category={category}>
+                            <label htmlFor={category}>{category}: </label>
                             <input 
                                 type="text" 
-                                id={key} 
-                                name={key} 
-                                value={value}
+                                id={category} 
+                                name={category} 
+                                value={formData[category] || ""}
+                                required = {['name', 'team', 'position'].includes(category)}
                                 onChange={handleChange}
                             />
                         </div>

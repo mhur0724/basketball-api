@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import AddPlayerFormField from '../components/AddPlayerFormField';
 const AddPlayer = () => {
     const [categories, setCategories] = useState({});
     const [formData, setFormData] = useState({});
@@ -8,15 +9,17 @@ const AddPlayer = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/players/add`)
-        .then((response) => {
+        const getPlayerCategories = async () => {
+          try {
+            const response = await axios.get(`http://localhost:3000/players/add`);
             setCategories(response.data);
-            setLoading(false);
-        })
-        .catch(err => {
+          } catch (err) {
             console.log('Error adding to players', err);
+          } finally {
             setLoading(false)
-        })
+          }
+        } 
+        getPlayerCategories();
     },[])
 
 const handleChange = (e) => {
@@ -25,41 +28,34 @@ const handleChange = (e) => {
         }));
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios.post(`http://localhost:3000/players/`, formData)
-        .then(() => {
-            navigate(`/players`)
-        })
-        .catch(err => {
-            console.log('Error updating player', err);
-        })
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        await axios.post(`http://localhost:3000/players/`, formData)
+        navigate(`/players`)
+      } catch (err) {
+        console.log('Error updating player', err);
+      }
     }
     if (loading) return <p>Loading Player Form...</p>;
 
   return (
-    <form onSubmit={handleSubmit}>
-      {
-        categories.map((category,i) => {
-          if (category !== "id") {
-            return (
-              <div key={i}>
-                <label htmlFor={category}>{category}: </label>
-                <input 
-                    type="text" 
-                    id={category} 
-                    name={category} 
-                    value=""
-                    onChange={handleChange}
-                />
-              </div>
-            )
-          }
-        return null;
-        })
-      }
-      <button type='submit'>Submit</button>
-    </form>
+    <div>
+      <h1>Add Player</h1>
+      <form onSubmit={handleSubmit}>
+        {categories
+          .filter(category => category !== "id")
+          .map(category => (
+            <AddPlayerFormField
+              key={category}
+              category={category}
+              handleChange={handleChange}
+              formData={formData}
+            />
+        ))}
+        <button type='submit'>Submit</button>
+      </form>
+    </div>
   )
 }
 

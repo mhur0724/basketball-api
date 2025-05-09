@@ -1,31 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import PlayerStatsCard from '../components/PlayerStatsCard';
 
 const Player = () => {
     const { playerId } = useParams();
-    const [player, setPlayer] = useState(null);
+    const [player, setPlayer] = useState([]);
     const [loading, setLoading] = useState(true);
+
     const navigate = useNavigate();
 
-    let url = `http://localhost:3000/players/${playerId}`;
-    
     useEffect(() => {
-        axios.get(url)
-        .then((response) => {
-            setPlayer(response.data);
-            setLoading(false);
-        })
-        .catch(err => {
-            console.log('Error fetching player', err);
-            setLoading(false);
-        })
+        const fetchPlayer = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3000/players/${playerId}`);
+                setPlayer(response.data);
+            } catch (err) {
+                console.log('Error fetching players: ', err);
+            }   finally {
+                setLoading(false)
+            }
+        }
+        fetchPlayer();
     },[playerId])
     
     if (loading) return <p>loading player...</p>;
-    if (!player) return <p>Player not found</p>;
+    if (!player) return <p>Failed to load player</p>;
 
-    const handleDeletePlayer = () => {
+    const handleDeletePlayer = async () => {
+        try {
+            await axios.delete(`http://localhost:3000/players/${playerId}`)
+            navigate('/players');
+        } catch (err) {
+            console.log('could not delete players', err);
+        }
     }
 
     const handleEditPlayer = () => {
@@ -40,11 +48,15 @@ const Player = () => {
     <div>
         <h1>{player.name}</h1>
         <ul>
-        {Object.entries(player).map(([key, value]) => (
-            <li key={key}>
-            <strong>{key}:</strong> {value}
-            </li>
-        ))}
+            {
+                Object.entries(player).map(([category, stat],i) => 
+                    <PlayerStatsCard 
+                        key={i} 
+                        category={category} 
+                        stat={stat ?? 'N/A'}
+                    />
+                )
+            }
         </ul>
         <button onClick={handleDeletePlayer}>Delete Player</button>
         <button onClick={handleEditPlayer}>Edit Player</button>
