@@ -5,7 +5,7 @@ import PlayerStatsCard from '../components/PlayerStatsCard';
 
 const Player = () => {
     const { playerId } = useParams();
-    const [player, setPlayer] = useState([]);
+    const [player, setPlayer] = useState({});
     const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();

@@ -52,8 +52,8 @@ const EditPlayer = () => {
                             category={category}
                             handleChange={handleChange}
                             formData={formData}
-                        />
-                    ))
+                            />
+                        ))
                     }
                     <button type='submit'>Submit</button>
                 </form>
