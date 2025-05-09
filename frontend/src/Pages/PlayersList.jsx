@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
 const PlayersList = () => {
     const [players, setPlayers] = useState([]);
@@ -19,12 +20,16 @@ const PlayersList = () => {
     if (loading) return <p>Loading players...</p>;
   return (
     <div>
-        <h2>players list</h2>
         <ul>
             {players.map(player => (
-                <li key={player.id}>{player.name} - {player.team}</li>
+                <li key={player.id}>
+                    <Link to={`/players/${player.id}`}>{player.name}</Link>
+                </li>
             ))}
         </ul>
+        <Link to="/players/add">
+            <button>Add Player</button>
+        </Link>
     </div>
   )
 }
