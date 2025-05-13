@@ -24,7 +24,7 @@ const Teams = () => {
     <div className='teams-container'>
         {
             teams.map(({id, team,logo, conference}) => (
-            <TeamsComponent key={id} team={team} logo={logo} conference={conference}/>
+            <TeamsComponent key={id} id={id} team={team} logo={logo} conference={conference}/>
         ))}
     </div>
   )

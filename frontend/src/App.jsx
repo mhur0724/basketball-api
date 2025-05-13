@@ -18,7 +18,7 @@ function App() {
           <Route index element={<Index/>}/>
           <Route path="/players" element={<Players/>} exact/>
           <Route path="/teams" element={<Teams/>} exact/>
-          <Route path="/teams/:team" element={<Team/>} exact/>
+          <Route path="/teams/:teamId" element={<Team/>} exact/>
           <Route path="/add" element={<AddPlayer/>} exact/>
           <Route path="/:playerId" element={<Player/>} />
           <Route path="/:playerId/edit" element={<EditPlayer/>} />
