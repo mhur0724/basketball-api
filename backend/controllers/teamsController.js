@@ -13,12 +13,13 @@ const getTeams = async (req, res) => {
 };
 
 const getTeam = async (req, res) => {
-    const { teamId } = req.params;
+    const { teamName } = req.params;
+    const tableName = teamName.toLowerCase().replace(/\s+/g, '_');
     try {
-        const team = await api.nba.getTeam(teamId);
-        res.status(200).json(team.data)
+        const team = await pool.query(`SELECT * FROM ${tableName}`)
+        res.status(200).json(team.rows)
     } catch(err) {
-        res.status(500).send('could not get team: ', err)
+        res.status(500).send('backend could not get team and players: ', err)
     }
 }
 

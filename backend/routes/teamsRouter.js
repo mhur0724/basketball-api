@@ -3,6 +3,6 @@ const teamsRouter = Router();
 const {getTeams, getTeam} = require('../controllers/teamsController');
 
 teamsRouter.get('/', getTeams);
-teamsRouter.get('/:teamId', getTeam)
+teamsRouter.get('/:teamName', getTeam)
 
 module.exports = teamsRouter;

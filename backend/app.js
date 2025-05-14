@@ -4,7 +4,7 @@ const express = require("express");
 const playersRouter = require('./routes/playersRouter');
 const methodOverride = require('method-override');
 const path = require("path");
-const teamsRouter = require('./routes/teamsRouters');
+const teamsRouter = require('./routes/teamsRouter');
 const app = express();
 
 app.use(cors({ origin: 'http://localhost:5173' })); // Enable CORS for frontend
@@ -16,7 +16,7 @@ app.use(methodOverride('_method')); // For supporting _method in form actions
 // API route for players
 // app.use("/player", playersRouter);
 app.use("/players", playersRouter);
-app.use("/teams", teamsRouter)
+app.use("/teams", teamsRouter);
 
 const PORT = 3000;
 app.listen(PORT, () => {
