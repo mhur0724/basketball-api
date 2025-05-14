@@ -23,8 +23,8 @@ const Teams = () => {
   return (
     <div className='teams-container'>
         {
-            teams.map(({id, team,logo, conference}) => (
-            <TeamsComponent key={id} id={id} team={team} logo={logo} conference={conference}/>
+            teams.map(({id, team, logo, conference}) => (
+            <TeamsComponent key={id} team={team} logo={logo} conference={conference}/>
         ))}
     </div>
   )

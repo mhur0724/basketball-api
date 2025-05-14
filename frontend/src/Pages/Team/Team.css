@@ -1,0 +1,18 @@
+.players-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 100px;
+}
+.players {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.players p {
+    margin: 16px;
+    padding: 5px;
+}

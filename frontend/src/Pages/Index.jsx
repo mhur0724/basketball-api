@@ -4,8 +4,8 @@ const Index = () => {
   return (
     <div>
       <h1>Welcome to my Basketball App!</h1>
-      <p>Here you can find the stats of players by season</p>
-      <p>To start you can either search by the player name or by selecting a team</p>
+      <p>Here you can find the list of active players by team</p>
+      <p>Team Rosters are accurate as of May 13, 2025</p>
     </div>
   )
 }

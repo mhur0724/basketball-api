@@ -1,0 +1,18 @@
+.player-card {
+    width: 18rem;
+    margin: 1rem;
+}
+
+@media (max-width: 728px) {
+    .player-card {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .player-card-img {
+        width: 50px;
+        height: 50px;
+        margin: 1rem;
+    }
+}

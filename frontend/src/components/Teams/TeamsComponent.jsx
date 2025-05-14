@@ -2,9 +2,9 @@ import React from 'react'
 import Card from 'react-bootstrap/Card'
 import './TeamsComponent.css'
 import { Link } from 'react-router-dom'
-const TeamsComponent = ({id:teamId, team, logo, conference}) => {
+const TeamsComponent = ({team, logo, conference}) => {
   return (
-    <Link className='team-card-link' to={`/teams/${teamId}`}>
+    <Link className='team-card-link' to={`/teams/${team}`}>
       <Card className='team-card'>
           <Card.Img variant="top" src={`/team-logos/${logo}`} alt={logo} className='team-card-img' />
           <Card.Body>

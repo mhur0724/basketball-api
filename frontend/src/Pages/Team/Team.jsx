@@ -1,15 +1,17 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
+import "./Team.css";
+import TeamPlayerComponent from '../../components/teamPlayer/teamPlayerComponent';
 const Team = () => {
-    const [team, setTeam] = useState({});
-    const {teamId} = useParams();
+    const [team, setTeam] = useState([]);
+    const {teamName} = useParams();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchTeam = async () => {
             try {
-                const teamData = await axios.get(`http://localhost:3000/teams/${teamId}`);
+                const teamData = await axios.get(`http://localhost:3000/teams/${teamName}`);
                 setTeam(teamData.data)
             } catch (err) {
                 console.log('could not get team: ', err);
@@ -21,8 +23,24 @@ const Team = () => {
     },[])
     if (loading) return <p>Loading team...</p>
     return (
-        <div>
-            <p>Hello from the {team.full_name}</p>
+        <div className='players-container'>
+            <p>{teamName} Players</p>
+            <div className='players'>
+            {
+                team.map(({player_id, age, height, img, jersey_number, name, position, weight}) => (
+                    <TeamPlayerComponent 
+                    key={player_id}
+                    age={age}
+                    height={height}
+                    img={img}
+                    jersey_number={jersey_number}
+                    name={name}
+                    position={position}
+                    weight={weight}
+                    />
+                ))
+            }
+            </div>
         </div>
     )
 }
