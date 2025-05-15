@@ -1,5 +1,5 @@
 import './App.css';
-import Players from './Pages/Players.jsx';
+import Players from './Pages/Players/Players.jsx';
 import Player from './Pages/Player.jsx';
 import EditPlayer from './Pages/EditPlayer.jsx';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
