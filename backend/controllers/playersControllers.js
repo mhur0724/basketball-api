@@ -1,9 +1,7 @@
 const pool = require("../db");
-
 const getPlayers = async (req, res) => {
   try {
-    const players = await pool.query("SELECT * FROM players;");
-    // res.render("players", { title: "players", players: players.rows });
+    const players = await pool.query(`SELECT * FROM players`);
     res.status(200).json(players.rows)
   } catch (err) {
     res.status(500).send("Could not get players");
