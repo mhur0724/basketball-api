@@ -3,42 +3,51 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import "./Team.css";
 import TeamPlayerComponent from '../../components/teamPlayer/teamPlayerComponent';
+import SearchBar from '../../components/SearchBar/SearchBar';
 const Team = () => {
     const [team, setTeam] = useState([]);
     const {teamName} = useParams();
     const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState('');
 
     useEffect(() => {
         const fetchTeam = async () => {
             try {
-                const teamData = await axios.get(`http://localhost:3000/teams/${teamName}`);
-                setTeam(teamData.data)
+                const res = await axios.get(`http://localhost:3000/teams/${teamName}`);
+                const teamPlayers = res.data;
+                setTeam(teamPlayers);
             } catch (err) {
                 console.log('could not get team: ', err);
             } finally {
-                setLoading(false)
+                setLoading(false);
             }
-        } 
-        fetchTeam()
-    },[])
+        };
+        fetchTeam();
+    }, [teamName]);
+
+    const handlePlayerSearch = (value) => {
+        setSearch(value)
+    }
+    
+    const filteredPlayers = team.filter(player => player.name.toLowerCase().includes(search.toLowerCase()));
+    
     if (loading) return <p>Loading team...</p>
+
     return (
         <div className='players-container'>
-            <p>{teamName} Players</p>
+            <h1>{teamName} Players</h1>
+            <SearchBar onSearch={handlePlayerSearch} />
             <div className='players'>
             {
-                team.map(({player_id, age, height, img, jersey_number, name, position, weight}) => (
-                    <TeamPlayerComponent 
-                    key={player_id}
-                    age={age}
-                    height={height}
-                    img={img}
-                    jersey_number={jersey_number}
-                    name={name}
-                    position={position}
-                    weight={weight}
-                    />
-                ))
+                filteredPlayers.map((player) => {
+                    return (
+                        <TeamPlayerComponent 
+                        key={player.id}
+                        {...player}
+                        player_id={player.id}
+                        />
+                    )
+                })
             }
             </div>
         </div>

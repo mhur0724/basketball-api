@@ -1,13 +1,13 @@
-import React from 'react'
+import React from 'react';
 
 const Index = () => {
   return (
-    <div>
-      <h1>Welcome to my Basketball App!</h1>
-      <p>Here you can find the list of active players by team</p>
-      <p>Team Rosters are accurate as of May 13, 2025</p>
+    <div className="index-container" style={{ padding: '2rem', textAlign: 'center' }}>
+      <h1>🏀 Welcome to My Basketball App!</h1>
+      <p>Browse team rosters and track your favorite players.</p>
+      <p><em>Data accurate as of May 13, 2025.</em></p>
     </div>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

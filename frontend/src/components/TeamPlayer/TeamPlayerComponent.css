@@ -1,0 +1,80 @@
+.player-card {
+    position: relative;
+    transition: 0.2s;
+    width: 18rem;
+    margin: 1rem;
+}
+
+.player-card:hover {
+    transform: scale(1.05);
+}
+
+.player-card-img {
+    width: 100%;
+    height: 100%;
+}
+
+.player-card-name {
+    text-align: center;
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
+.player-team {
+    white-space: nowrap;
+}
+
+.favorite-btn {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    box-shadow: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.favorite-btn:hover,
+.favorite-btn:active,
+.favorite-btn:focus {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+}
+
+.favorite {
+    position: relative;
+    color: red;
+}
+
+.not-favorite {
+    position: relative;
+    color: grey;
+}
+
+@media (max-width: 728px) {
+    .player-card {
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+
+    .player-card-img {
+        width: clamp(50px, 50%, 400px) !important;
+        height: 5rem !important;
+        margin: 1rem;
+    }
+
+    .player-card-description {
+        display: none;
+    }
+}

@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import TeamsComponent from '../../components/Teams/TeamsComponent';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Form from 'react-bootstrap/Form';
 import './Teams.css'
+import SearchBar from '../../components/SearchBar/SearchBar';
 const Teams = () => {
     const [loading, setLoading] = useState(true);
     const [teams, setTeams] = useState([]);
@@ -25,37 +25,36 @@ const Teams = () => {
         fetchTeams();
     }, [])
 
-    const filteredTeams = teams.filter(team => conference === 'All' ? true : team.conference === conference);
+    const filteredSearchedTeams = teams.filter(team =>
+    (conference === 'All' || team.conference === conference) &&
+    team.team.toLowerCase().includes(search.toLowerCase())
+    );
 
-    const searchedTeam = filteredTeams.filter(team => search === '' ? true : team.team.toLowerCase().includes(search.toLowerCase()))
-
-    const handleSearchTeam = (e) => {
-        setSearch(e.target.value)
+    const handleSearchTeam = (value) => {
+        setSearch(value)
     }
-    
-    if (loading) return <p>Loading teams...</p>;
+
+    const conferences = ['Western', 'All', 'Eastern'];
+
+if (loading) return <p>Loading teams...</p>;
   return (
     <div className='teams-container'>
+        <h1>{conference} Teams</h1>
         <ButtonGroup className='buttons'>
-            <Button 
-                onClick={() => setConference('Western')} 
-                className={conference == 'Western' ? 'active' : ''}
-            >Western</Button>
-            <Button onClick={() => setConference('All')} className={conference == 'All' ? 'active' : ''}>All</Button>
-            <Button onClick={() => setConference('Eastern')} className={conference == 'Eastern' ? 'active' : ''}>Eastern</Button>
+        {
+            conferences.map((conf) => (
+                <Button key={conf} onClick={() => setConference(conf)} className={conference === conf ? 'active': ''}>{conf}</Button>
+            ))
+        }
         </ButtonGroup>
-        <Form className='shadow-none' onKeyDown={e => {if (e.key === 'Enter') e.preventDefault()}}>
-            <Form.Control type="text" placeholder="Enter Team..." onChange={handleSearchTeam} />
-        </Form>
-        <p>{}</p>
+        <SearchBar onSearch={handleSearchTeam}/>
         <div className='teams'>
             {
-                searchedTeam.length < 1 ? <p>Could not find team</p> : 
-                searchedTeam.map(({id, team, logo, conference}) => 
+                filteredSearchedTeams.length < 1 ? <p>Could not find team</p> : 
+                filteredSearchedTeams.map(({id, team, logo, conference}) => 
                 (
                 <TeamsComponent key={id} team={team} logo={logo} conference={conference}/>
             ))}
-
         </div>
     </div>
   )
