@@ -1,10 +1,3 @@
-process.on('uncaughtException', (err) => {
-  console.error('🔥 Uncaught Exception:', err);
-});
-process.on('unhandledRejection', (reason) => {
-  console.error('🔥 Unhandled Rejection:', reason);
-});
-
 const cors = require('cors');
 const express = require("express");
 const playersRouter = require('./routes/playersRouter');
@@ -24,18 +17,6 @@ app.use(methodOverride('_method')); // For supporting _method in form actions
 app.use("/players", playersRouter);
 app.use("/teams", teamsRouter);
 app.use("/favorite-players", favoritePlayersRouter)
-
-const pool = require("./db");
-
-app.get("/test-db", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT NOW()");
-    res.send(`🟢 DB connected: ${result.rows[0].now}`);
-  } catch (err) {
-    console.error("❌ DB connection failed:", err);
-    res.status(500).send("DB error");
-  }
-});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

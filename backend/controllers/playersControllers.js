@@ -12,8 +12,7 @@ const getPlayers = async (req, res) => {
     const players = await pool.query(query);
     res.status(200).json(players.rows);
   } catch (err) {
-    console.error("❌ DB query failed:", err);  // <- add this
-    res.status(500).send("Could not get players");
+    res.status(500).send("Could not get players: " + err.message);
   }
 };
 
