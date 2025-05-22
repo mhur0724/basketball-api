@@ -14,7 +14,7 @@ const Teams = () => {
     useEffect(() => {
         const fetchTeams = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/teams');
+                const response = await axios.get('https://basketball-api-production.up.railway.app/teams');
                 setTeams(response.data);
             } catch (err) {
                 console.log('Error fetching teams: ', err);

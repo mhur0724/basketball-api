@@ -10,7 +10,7 @@ const FavoritePlayers = () => {
     useEffect(() => {
         const getFavorites = async () => {
             try {
-                const favorites = await axios.get('http://localhost:3000/favorite-players');
+                const favorites = await axios.get('https://basketball-api-production.up.railway.app/favorite-players');
                 setFavorites(favorites.data)
             } catch (err) {
                 console.log('there was an error: ', err);

@@ -14,7 +14,7 @@ const PlayersList = () => {
     useEffect(() => {
         const fetchPlayers = async () => {
             try {
-                const playersResponse = await axios.get('http://localhost:3000/players');
+                const playersResponse = await axios.get('https://basketball-api-production.up.railway.app/players');
                 setPlayers(playersResponse.data)
             } catch (err) {
                 console.log('error getting players: ', err);
