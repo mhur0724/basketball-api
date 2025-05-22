@@ -13,6 +13,11 @@ app.use(express.urlencoded({ extended: true })); // Parse incoming form data
 app.use(express.json()); // Parse incoming JSON data
 app.use(methodOverride('_method')); // For supporting _method in form actions
 
+
+app.get("/", (req, res) => {
+  res.send("✅ Backend is alive");
+});
+
 // API route for players
 app.use("/players", playersRouter);
 app.use("/teams", teamsRouter);
