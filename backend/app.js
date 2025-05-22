@@ -1,3 +1,10 @@
+process.on('uncaughtException', (err) => {
+  console.error('🔥 Uncaught Exception:', err);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('🔥 Unhandled Rejection:', reason);
+});
+
 const cors = require('cors');
 const express = require("express");
 const playersRouter = require('./routes/playersRouter');
