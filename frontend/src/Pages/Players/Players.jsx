@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import TeamPlayerComponent from '../../components/teamPlayer/teamPlayerComponent';
+import TeamPlayerComponent from '../../components/TeamPlayer/TeamPlayerComponent';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Dropdown from 'react-bootstrap/Dropdown';
 

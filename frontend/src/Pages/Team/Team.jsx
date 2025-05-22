@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import "./Team.css";
-import TeamPlayerComponent from '../../components/teamPlayer/teamPlayerComponent';
+import TeamPlayerComponent from '../../components/TeamPlayer/TeamPlayerComponent';
 import SearchBar from '../../components/SearchBar/SearchBar';
 const Team = () => {
     const [team, setTeam] = useState([]);

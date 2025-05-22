@@ -1,7 +1,7 @@
 import React from 'react'
 import {useState, useEffect} from 'react';
 import axios from 'axios';
-import TeamPlayerComponent from '../../components/teamPlayer/teamPlayerComponent';
+import TeamPlayerComponent from '../../components/TeamPlayer/TeamPlayerComponent';
 import '../Players/Players.css'
 import './FavoritePlayers.css'
 const FavoritePlayers = () => {

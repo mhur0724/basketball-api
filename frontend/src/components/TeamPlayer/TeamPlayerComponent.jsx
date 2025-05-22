@@ -13,10 +13,11 @@ const TeamPlayerComponent = ({age, height, img, jersey_number, name, position, w
 const handleToggleFavorite = async () => {
   setIsFavorite(prev => !prev);
   try {
+    const API = import.meta.env.VITE_API_URL;
     if (!isFavorite) {
-      await axios.post('http://localhost:3000/favorite-players', { player_id, name, team });
+      await axios.post(`${API}/favorite-players`, { player_id, name, team });
     } else {
-      await axios.delete(`http://localhost:3000/favorite-players/${player_id}`);
+      await axios.delete(`${API}/favorite-players/${player_id}`);
       if (onRemoveFavorite) {
         onRemoveFavorite(player_id);
       }
