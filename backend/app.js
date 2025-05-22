@@ -19,6 +19,12 @@ app.use(express.static(path.join(__dirname, "public"))); // Serve static files f
 app.use(express.urlencoded({ extended: true })); // Parse incoming form data
 app.use(express.json()); // Parse incoming JSON data
 app.use(methodOverride('_method')); // For supporting _method in form actions
+
+// API route for players
+app.use("/players", playersRouter);
+app.use("/teams", teamsRouter);
+app.use("/favorite-players", favoritePlayersRouter)
+
 const pool = require("./db");
 
 app.get("/test-db", async (req, res) => {
@@ -30,11 +36,6 @@ app.get("/test-db", async (req, res) => {
     res.status(500).send("DB error");
   }
 });
-
-// // API route for players
-// app.use("/players", playersRouter);
-// app.use("/teams", teamsRouter);
-// app.use("/favorite-players", favoritePlayersRouter)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
