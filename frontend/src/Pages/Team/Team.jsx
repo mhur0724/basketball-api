@@ -13,7 +13,8 @@ const Team = () => {
     useEffect(() => {
         const fetchTeam = async () => {
             try {
-                const res = await axios.get(`https://basketball-api-production.up.railway.app/teams/${teamName}`);
+                const API = import.meta.env.VITE_API_URL;
+                const res = await axios.get(`${API}/teams/${teamName}`);
                 const teamPlayers = res.data;
                 setTeam(teamPlayers);
             } catch (err) {
