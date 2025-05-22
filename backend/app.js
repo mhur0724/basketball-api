@@ -19,11 +19,22 @@ app.use(express.static(path.join(__dirname, "public"))); // Serve static files f
 app.use(express.urlencoded({ extended: true })); // Parse incoming form data
 app.use(express.json()); // Parse incoming JSON data
 app.use(methodOverride('_method')); // For supporting _method in form actions
+const pool = require("./db");
 
-// API route for players
-app.use("/players", playersRouter);
-app.use("/teams", teamsRouter);
-app.use("/favorite-players", favoritePlayersRouter)
+app.get("/test-db", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT NOW()");
+    res.send(`🟢 DB connected: ${result.rows[0].now}`);
+  } catch (err) {
+    console.error("❌ DB connection failed:", err);
+    res.status(500).send("DB error");
+  }
+});
+
+// // API route for players
+// app.use("/players", playersRouter);
+// app.use("/teams", teamsRouter);
+// app.use("/favorite-players", favoritePlayersRouter)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
