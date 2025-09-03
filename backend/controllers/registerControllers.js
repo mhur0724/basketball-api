@@ -3,7 +3,7 @@ const registerUser = async (req, res) => {
   try {
     const { username, password } = req.body;
     await pool.query(`
-      INSERT INTO users (username, password)
+      INSERT INTO users (username, password_hash)
       VALUES ($1, $2)
       `, [username, password]
       )
