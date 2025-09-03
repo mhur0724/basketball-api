@@ -3,10 +3,16 @@ const express = require("express");
 const playersRouter = require('./routes/playersRouter');
 const teamsRouter = require('./routes/teamsRouter');
 const favoritePlayersRouter = require('./routes/favoritePlayersRouter');
+const loginRouter = require('./routes/loginRouter');
+const registerRouter = require('./routes/registerRouter');
 const methodOverride = require('method-override');
 const path = require("path");
 const app = express();
 
+app.use((req, res, next) => {
+  console.log("Incoming:", req.method, req.url);
+  next();
+});
 app.use(cors()); // Enable CORS for frontend
 app.use(express.static(path.join(__dirname, "public"))); // Serve static files from the "public" folder
 app.use(express.urlencoded({ extended: true })); // Parse incoming form data
@@ -16,7 +22,9 @@ app.use(methodOverride('_method')); // For supporting _method in form actions
 // API route for players
 app.use("/players", playersRouter);
 app.use("/teams", teamsRouter);
-app.use("/favorite-players", favoritePlayersRouter)
+app.use("/favorite-players", favoritePlayersRouter);
+// app.use("/login", loginRouter);
+app.use("/register", registerRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
