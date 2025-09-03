@@ -18,6 +18,7 @@ const NavBar = () => {
             <Nav.Link as={NavLink} to="/teams">Teams</Nav.Link>
             <Nav.Link as={NavLink} to="/players">Players</Nav.Link>
             <Nav.Link as={NavLink} to="/favorite-players">Favorite Players</Nav.Link>
+            <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

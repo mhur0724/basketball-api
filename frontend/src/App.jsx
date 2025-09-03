@@ -7,6 +7,8 @@ import Teams from './Pages/Teams/Teams';
 import Team from './Pages/Team/Team';
 import Index from './Pages/Index';
 import FavoritePlayers from './Pages/favorite-players/FavoritePlayers';
+import Login from './Pages/Login/Login';
+import RegisterForm from './Pages/Register/Register'
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route path="/teams" element={<Teams/>}/>
           <Route path="/teams/:teamName" element={<Team/>}/>
           <Route path="/favorite-players" element={<FavoritePlayers/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/register" element={<RegisterForm/>}/>
         </Route>
       </Routes>
     </Router>
