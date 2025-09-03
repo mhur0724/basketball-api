@@ -9,10 +9,6 @@ const methodOverride = require('method-override');
 const path = require("path");
 const app = express();
 
-app.use((req, res, next) => {
-  console.log("Incoming:", req.method, req.url);
-  next();
-});
 app.use(cors()); // Enable CORS for frontend
 app.use(express.static(path.join(__dirname, "public"))); // Serve static files from the "public" folder
 app.use(express.urlencoded({ extended: true })); // Parse incoming form data
