@@ -2,8 +2,11 @@ const pool = require("../db");
 const registerUser = async (req, res) => {
   try {
     const { username, password } = req.body;
-    console.log("Register request received:", username, password);
-
+    await pool.query(`
+      INSERT INTO users (username, password)
+      VALUES ($1, $2)
+      `, [username, password]
+      )
     // Just send back what you got, to verify
     res.status(200).json({ username, password });
   } catch (err) {
